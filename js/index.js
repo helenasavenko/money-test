@@ -113,14 +113,21 @@ var moneyTest = (function(moneyTest){
 
     function _renderFinal(){
         console.log('final');
+        var tpl = '';
+        tpl += '<div class="mt-question_wrapper">';
+        tpl += 'вы набрали ' + points;
+        tpl += '</div>';
+        wrapper.innerHTML = tpl;
     }
     function _renderQuestion(num){
         var tpl = '';
+        tpl += '<div class="mt-question_wrapper">';
         tpl += '<div class="mt-question_num">' + num + '/' + _countAll() + '</div>';
         tpl += '<div class="mt-question_info">';
         tpl += '<div class="mt-question_info-descr">' + questions[num].question + '</div>';
         tpl += '<div class="mt-question_info-answers">';
         tpl += _appendAnswer(num)
+        tpl += '</div>';
         tpl += '</div>';
         tpl += '</div>';
         wrapper.innerHTML = tpl;
