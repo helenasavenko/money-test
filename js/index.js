@@ -111,6 +111,13 @@ var moneyTest = (function(moneyTest){
     var context = null;
     var points = 0;
 
+    function _getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
     function _renderFinal(){
         console.log('final');
         var tpl = '';
@@ -118,6 +125,7 @@ var moneyTest = (function(moneyTest){
         tpl += 'вы набрали ' + points;
         tpl += '</div>';
         wrapper.innerHTML = tpl;
+        document.cookie = 'moneytest=' + points + '; path=/;';
     }
     function _renderQuestion(num){
         var tpl = '';
@@ -161,11 +169,17 @@ var moneyTest = (function(moneyTest){
 
     return {
         init: function(params){
+            var cookie = _getCookie('moneytest');
             context = this;
             if (params.questions) questions = params.questions;
             if (params.wrapper) wrapper = document.querySelector(params.wrapper);
-            console.log(wrapper);
-            _renderQuestion(1);
+            if (cookie){
+                points = cookie;
+                _renderFinal()
+            } else{
+                _renderQuestion(1);
+            }
+
         },
         answer: _setAnswer
     }
